@@ -17,12 +17,15 @@ class App extends React.Component {
 
   loadMovies() {
     // go grab (aka get) all the data from some url
+    
     const url = "https://api.themoviedb.org/3/discover/movie?api_key=b6fbc7f3f313bd395902af464ef47262&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
     axios.get(url)
       .then(response =>
       {
         // then put just the movies (not everything) into the state
         this.setState({movies: response.data.results});
+        console.log(this.state.movies)
+
       });
 
   }
@@ -37,10 +40,20 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>Check out these movies!!!!!!</h1>
+        <div className="movies">
         {this.state.movies.map(movie =>
           {
-            return <h2>{movie.title} ({movie.release_date})</h2>;
-          })}
+            return (
+              <div className="movie">
+            
+            <h2>{movie.title}</h2>
+            <h4>{movie.release_date}</h4>
+            <a href={"https://www.themoviedb.org/movie/" + movie.id}>
+            <img src={"https://image.tmdb.org/t/p/w92/" + movie.poster_path}/>
+            </a>
+            </div>
+        )})}
+      </div>
       </div>
     );
   }
